@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Modal, Button } from 'antd'
-import { getDomain, isProdEnv } from 'src/utils/common'
+import { getDomain, isProdEnv } from 'src/utils/envUtil'
 import './index.less'
 
 const ChromeCheck = () => {

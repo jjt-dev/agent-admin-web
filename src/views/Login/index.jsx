@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
 import './index.less'
-import loginLogo from 'src/images/login_logo.png'
-import { Form, Input, Button, Divider } from 'antd'
+
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Divider, Form, Input } from 'antd'
+import React, { useEffect } from 'react'
 import * as FA from 'react-fontawesome'
-import api from 'src/utils/api'
-import { local, TOKEN, AGENT_CODE, PAGE_RELOADED } from 'src/utils/storage'
-import * as appAction from 'src/actions/app'
 import { useDispatch } from 'react-redux'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import * as appAction from 'src/actions/app'
+import loginLogo from 'src/images/login_logo.png'
+import api from 'src/utils/api'
+import { loginPath } from 'src/utils/httpUtil'
+import { local, PAGE_RELOADED, TOKEN } from 'src/utils/storage'
 
 const Login = ({ history }) => {
   const dispatch = useDispatch()
@@ -23,11 +25,7 @@ const Login = ({ history }) => {
   const onFinish = async (values) => {
     const { username, password } = values
     try {
-      const result = await api.post(
-        `/common/login?username=${username}&password=${password}&agentCode=${local.getItem(
-          AGENT_CODE
-        )}`
-      )
+      const result = await api.post(loginPath(username, password))
       local.setItem(TOKEN, result)
       dispatch(appAction.getUserInfo())
       history.push('/')

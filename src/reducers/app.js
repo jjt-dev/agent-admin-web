@@ -4,13 +4,11 @@ import {
   APP_SHOW_LOADING,
   APP_CLOSE_LOADING,
   APP_OAUTH_USER,
-  GET_ALL_COACHES,
 } from 'src/actions/app'
 
 const initState = {
   loading: false,
   user: null,
-  allCoaches: [],
 }
 
 const app = handleActions(
@@ -31,14 +29,6 @@ const app = handleActions(
       return {
         ...state,
         user: payload,
-      }
-    },
-    [GET_ALL_COACHES]: (state, { payload }) => {
-      const allCoaches = payload.data
-      return {
-        ...state,
-        allCoaches,
-        enabledCoaches: allCoaches.filter((item) => item.isEnable),
       }
     },
   },

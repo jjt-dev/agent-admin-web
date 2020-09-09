@@ -1,20 +1,11 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import PageForm from 'src/components/PageForm'
-import { getAllCoaches } from 'src/actions/app'
 
-const Coach = () => {
-  const dispatch = useDispatch()
-
-  return (
-    <PageForm
-      callback={() => dispatch(getAllCoaches())}
-      formItems={formItems}
-    />
-  )
+const Agent = () => {
+  return <PageForm formItems={formItems} />
 }
 
-export default Coach
+export default Agent
 
 const formItems = [
   {

@@ -1,9 +1,12 @@
+import { message, modal } from 'antd'
 import React from 'react'
-import { confirmUpdate } from 'src/utils/common'
-import ListHeader from '../ListHeader'
-import CustomTable from '../CustomTable'
 import useActiveRoute from 'src/hooks/useActiveRoute'
+import api from 'src/utils/api'
 
+import CustomTable from '../CustomTable'
+import ListHeader from '../ListHeader'
+
+const { confirm } = modal
 const { useTableFetch } = CustomTable
 
 const PageList = ({
@@ -39,6 +42,30 @@ const PageList = ({
   // addCallback如果没有值，则取list的编辑路径
   if (!addCallback) {
     addCallback = editPath
+  }
+
+  const confirmUpdate = ({
+    status,
+    title,
+    titleValue,
+    path,
+    callback,
+    contentTitle,
+  }) => {
+    confirm({
+      title: `请问您确认要${status}该${title}吗?`,
+      content: `${contentTitle ?? title}名: ${titleValue}`,
+      okText: '确定',
+      cancelText: '取消',
+      onOk: async () => {
+        await api.post(path)
+        message.success(`${title}${status}成功`)
+        callback && callback()
+      },
+      onCancel() {
+        console.log('Cancel')
+      },
+    })
   }
 
   const updateEntityStatus = (entity) => {

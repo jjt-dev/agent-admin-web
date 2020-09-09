@@ -1,7 +1,7 @@
 import { Button, Divider, Switch } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { formatTime } from './common'
+import { formatTime } from './timeUtil'
 
 export const tableOrder = {
   title: '序号',

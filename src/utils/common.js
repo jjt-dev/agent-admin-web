@@ -1,59 +1,15 @@
 import { message } from 'antd'
-import confirm from 'antd/lib/modal/confirm'
-import domtoimage from 'dom-to-image'
-import moment from 'moment'
-import * as queryString from 'query-string'
 
-import api from './api'
 import { EntityStatus } from './const'
-
-export const parseSearches = (location) => {
-  return queryString.parse(location.search)
-}
-
-/**
- * @param {*} value long值型的时间值
- * @format {*} format 时间格式
- */
-export const formatTime = (value, format = 'YYYY-MM-DD') => {
-  if (['string', 'number'].includes(typeof value)) {
-    return moment(value).format(format)
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((item) => moment(item).format(format))
-  }
-
-  return []
-}
-
-export const findById = (arrs, id) => {
-  const result = arrs.find((item) => item.id === id)
-  return result ?? {}
-}
 
 export const findIndexById = (arrs, id) => {
   const result = arrs.findIndex((item) => item.id === id)
   return result ?? {}
 }
 
-export const getApiRootImg = () => process.env.REACT_APP_API_IMAGE
-
-export const getDomain = () => process.env.REACT_APP_DOMAIN
-
-export const addNumPrefix = (value) => {
-  const absValue = String(Math.abs(value))
-  if (absValue.length === 1) return '00' + absValue
-  if (absValue.length === 2) return '0' + absValue
-  return value
-}
-
-export const addRoundNumPrefix = (value) => {
-  const numPrefixed = addNumPrefix(value)
-  if (value < 0) {
-    return `补考-${numPrefixed}`
-  }
-  return numPrefixed
+export const findById = (obj, id, prop = 'id') => {
+  const arrs = Array.isArray(obj) ? obj : Object.values(obj)
+  return arrs.find((item) => item[prop] === id) ?? {}
 }
 
 export const deepClone = (obj) => {
@@ -70,14 +26,6 @@ export const isNotEmpty = (value) => {
   if (value instanceof Object) return value
 
   return value.trim() !== ''
-}
-
-export const chineseDate = () => {
-  const da = new Date()
-  const year = da.getFullYear() + '年'
-  const month = da.getMonth() + 1 + '月'
-  const date = da.getDate() + '日'
-  return [year, month, date].join('')
 }
 
 export const buildParameters = (path, parameters) => {
@@ -123,105 +71,6 @@ export const copyToClipboard = (clipboardContent) => {
   document.body.removeChild(textArea)
 }
 
-/**
- * 下载dom为图片
- *
- * @param {*} element dom节点或者id
- * @param {*} options 目前options包含imgName, bgcolor, filter可选属性。
- * filter是一个函数，过滤不包含在下载图片里的node。例如过滤id: node => node.id !== 'new-widget'
- */
-export const domToImage = (element, options, callback) => {
-  const dom =
-    typeof element === 'string' ? document.getElementById(element) : element
-  domtoimage.toPng(dom, { ...options }).then(function (dataUrl) {
-    const link = document.createElement('a')
-    link.download = `${options.imgName ? options.imgName : '未命名图片'}.png`
-    link.href = dataUrl
-    link.click()
-    callback && callback()
-  })
-}
-
-const toDataURL = (url) => {
-  return fetch(url)
-    .then((response) => {
-      return response.blob()
-    })
-    .then((blob) => {
-      return URL.createObjectURL(blob)
-    })
-}
-
-export const downloadImg = async (url) => {
-  const a = document.createElement('a')
-  a.href = await toDataURL(getDomain() + url)
-  a.download = ''
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-}
-
-export const confirmDelete = (
-  title,
-  titleValue,
-  path,
-  callback,
-  contentTitle
-) => {
-  const entity = {
-    status: '删除',
-    title,
-    titleValue,
-    path,
-    callback,
-    contentTitle,
-  }
-  confirmUpdate(entity)
-}
-
-export const confirmChangeStatus = (
-  isEnable,
-  title,
-  titleValue,
-  path,
-  callback
-) => {
-  const entity = {
-    status: isEnable ? '禁用' : '启用',
-    title,
-    titleValue,
-    path,
-    callback,
-  }
-  confirmUpdate(entity)
-}
-
-export const confirmUpdate = ({
-  status,
-  title,
-  titleValue,
-  path,
-  callback,
-  contentTitle,
-}) => {
-  confirm({
-    title: `请问您确认要${status}该${title}吗?`,
-    content: `${contentTitle ?? title}名: ${titleValue}`,
-    okText: '确定',
-    cancelText: '取消',
-    onOk: async () => {
-      await api.post(path)
-      message.success(`${title}${status}成功`)
-      callback && callback()
-    },
-    onCancel() {
-      console.log('Cancel')
-    },
-  })
-}
-
 export const getStatus = (isEdit) => {
   return isEdit ? EntityStatus.EDIT : EntityStatus.CREATE
 }
-
-export const isProdEnv = process.env.REACT_APP_IS_PRODUCTION === 'true'

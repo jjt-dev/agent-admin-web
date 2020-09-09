@@ -1,10 +1,11 @@
-import React from 'react'
-import { Upload } from 'antd'
-import { getApiRootImg, getDomain } from 'src/utils/common'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import ImgCrop from 'antd-img-crop'
 import 'antd/es/modal/style'
 import 'antd/es/slider/style'
+
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import { Upload } from 'antd'
+import ImgCrop from 'antd-img-crop'
+import React from 'react'
+import { getApiRootImg, getDomain } from 'src/utils/envUtil'
 
 function getBase64(img, callback) {
   const reader = new FileReader()

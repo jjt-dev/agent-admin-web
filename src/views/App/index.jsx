@@ -39,6 +39,12 @@ const App = () => {
     }
   }, [dispatch, isLogin])
 
+  useEffect(() => {
+    if (user) {
+      dispatch(appAction.getAgentLevels())
+    }
+  }, [dispatch, user])
+
   return (
     <div
       className={classnames('app', {

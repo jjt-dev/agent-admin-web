@@ -1,6 +1,6 @@
+import { Button, Icon, message, Upload } from 'antd'
 import React from 'react'
-import { Upload, message, Button, Icon } from 'antd'
-import { getApiRootImg } from 'src/utils/common'
+import { getApiRootImg } from 'src/utils/envUtil'
 
 const UplaodImg = ({ callback, showUploadList, btnSize }) => {
   const props = {

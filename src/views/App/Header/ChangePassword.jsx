@@ -3,7 +3,7 @@ import { Modal, Form, Icon, Input, message } from 'antd'
 import './ChangePassword.less'
 import api from 'src/utils/api'
 import { formLayout } from 'src/utils/const'
-import { pathChangePsd } from 'src/utils/httpUtil'
+import { changePsdPath } from 'src/utils/httpUtil'
 
 const ChangePassword = ({ setVisible, user }) => {
   const [form] = Form.useForm()
@@ -14,7 +14,7 @@ const ChangePassword = ({ setVisible, user }) => {
       'password',
       'confirm',
     ])
-    await api.post(pathChangePsd({ oldPassword, newPsw }))
+    await api.post(changePsdPath(oldPassword, newPsw))
     message.success('密码修改成功。')
     setVisible(false)
   }

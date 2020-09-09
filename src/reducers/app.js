@@ -5,21 +5,12 @@ import {
   APP_CLOSE_LOADING,
   APP_OAUTH_USER,
   GET_ALL_COACHES,
-  GET_ALL_EXAM_LEVELS,
-  GET_ALL_SIGNING_EXAMS,
-  GET_ALL_EXAMINERS,
-  GET_ALL_ROOMS,
 } from 'src/actions/app'
 
 const initState = {
   loading: false,
   user: null,
   allCoaches: [],
-  enabledCoaches: [],
-  allExamLevels: [],
-  allSigningExams: [],
-  allExaminers: [],
-  allRooms: [],
 }
 
 const app = handleActions(
@@ -48,30 +39,6 @@ const app = handleActions(
         ...state,
         allCoaches,
         enabledCoaches: allCoaches.filter((item) => item.isEnable),
-      }
-    },
-    [GET_ALL_EXAM_LEVELS]: (state, { payload }) => {
-      return {
-        ...state,
-        allExamLevels: payload,
-      }
-    },
-    [GET_ALL_SIGNING_EXAMS]: (state, { payload }) => {
-      return {
-        ...state,
-        allSigningExams: payload.data,
-      }
-    },
-    [GET_ALL_EXAMINERS]: (state, { payload }) => {
-      return {
-        ...state,
-        allExaminers: payload.data,
-      }
-    },
-    [GET_ALL_ROOMS]: (state, { payload }) => {
-      return {
-        ...state,
-        allRooms: payload.data,
       }
     },
   },

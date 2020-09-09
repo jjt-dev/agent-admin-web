@@ -42,10 +42,6 @@ const App = () => {
   useEffect(() => {
     if (user) {
       dispatch(appAction.getAllCoaches())
-      dispatch(appAction.getAllExamLevels())
-      dispatch(appAction.getAllSigningExams())
-      dispatch(appAction.getAllExaminers())
-      dispatch(appAction.getAllRooms())
     }
   }, [dispatch, user])
 
@@ -53,7 +49,6 @@ const App = () => {
     <div
       className={classnames('app', {
         'breadcrumb-active': activeRoute.back,
-        'print-certificate': activeRoute.isPrintCertif,
         'login-page': isLogin,
       })}
     >
@@ -62,7 +57,7 @@ const App = () => {
         <SideMenu />
         <ErrorBoundary>
           <JjtBreadcrumb />
-          {isLogin || user ? <Router /> : <div></div>}
+          <Router />
         </ErrorBoundary>
       </main>
       {loading && <Spin />}

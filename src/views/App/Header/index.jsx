@@ -24,7 +24,7 @@ const Header = ({ user }) => {
         </Link>
       </div>
       <div className="header-right">
-        <div className="header-right__welcome">道馆-管理平台欢迎您！</div>
+        <div className="header-right__welcome">代理商-管理平台欢迎您！</div>
         <div className="header-right__user">
           <div
             className="header-right__user-password"

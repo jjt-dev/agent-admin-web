@@ -56,7 +56,7 @@ class Api {
           local.removeItem(PAGE_RELOADED)
           goToLogin()
         }
-        // schoolCode无效返回404, 其他错误返回0
+        // agentCode无效返回404, 其他错误返回0
         else if ([0, 404].includes(data.status)) {
           reject(data)
           message.error(data.msg)

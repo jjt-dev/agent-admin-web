@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Spin } from 'antd'
 import Header from 'src/views/App/Header'
-import { local, SCHOOL_CODE, session } from 'src/utils/storage'
+import { local, AGENT_CODE, session } from 'src/utils/storage'
 import { useSelector, useDispatch } from 'react-redux'
 import * as appAction from 'src/actions/app'
 import SideMenu from 'src/views/App/SideMenu'
@@ -21,14 +21,14 @@ const App = () => {
   const activeRoute = useActiveRoute()
   const isLogin = useLogin()
   const { loading, user } = useSelector((state) => state.app)
-  const { schoolCode } = useSearch()
+  const { agentCode } = useSearch()
 
   /**
-   * 从用户输入的url中拿到schoolCode
+   * 从用户输入的url中拿到agentCode
    */
   useDidMount(() => {
-    if (schoolCode) {
-      local.setItem(SCHOOL_CODE, schoolCode)
+    if (agentCode) {
+      local.setItem(AGENT_CODE, agentCode)
     }
     session.clear()
   })

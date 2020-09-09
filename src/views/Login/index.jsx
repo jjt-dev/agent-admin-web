@@ -4,7 +4,7 @@ import loginLogo from 'src/images/login_logo.png'
 import { Form, Input, Button, Divider } from 'antd'
 import * as FA from 'react-fontawesome'
 import api from 'src/utils/api'
-import { local, TOKEN, SCHOOL_CODE, PAGE_RELOADED } from 'src/utils/storage'
+import { local, TOKEN, AGENT_CODE, PAGE_RELOADED } from 'src/utils/storage'
 import * as appAction from 'src/actions/app'
 import { useDispatch } from 'react-redux'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
@@ -24,8 +24,8 @@ const Login = ({ history }) => {
     const { username, password } = values
     try {
       const result = await api.post(
-        `/common/login?username=${username}&password=${password}&schoolCode=${local.getItem(
-          SCHOOL_CODE
+        `/common/login?username=${username}&password=${password}&agentCode=${local.getItem(
+          AGENT_CODE
         )}`
       )
       local.setItem(TOKEN, result)
@@ -44,7 +44,7 @@ const Login = ({ history }) => {
           <Form layout="vertical" onFinish={onFinish} form={form}>
             <Form.Item>
               <Divider type="vertical" />
-              <span className="login-title">道馆管理</span>
+              <span className="login-title">代理商管理</span>
             </Form.Item>
             <Form.Item
               name="username"

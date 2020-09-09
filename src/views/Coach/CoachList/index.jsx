@@ -7,7 +7,7 @@ import {
   getRow,
   tableOrder,
   getSwitchRow,
-} from 'src/utils/common'
+} from 'src/utils/tableUtil'
 
 const CoachList = () => {
   return <PageList columns={getColumns} />

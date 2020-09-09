@@ -1,5 +1,5 @@
 export const TOKEN = 'token'
-export const SCHOOL_CODE = 'schoolCode'
+export const AGENT_CODE = 'agentCode'
 export const PAGE_RELOADED = 'pageReloaded'
 
 const local = {

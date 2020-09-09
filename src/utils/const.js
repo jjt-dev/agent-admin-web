@@ -26,3 +26,8 @@ export const emptyLayout = {
 export const timeFormat = 'YYYY-MM-DD HH:mm'
 export const dateFormat = 'YYYY-MM-DD'
 export const hourFormat = 'HH:mm'
+
+export const EntityStatus = {
+  CREATE: '新增',
+  EDIT: '编辑',
+}

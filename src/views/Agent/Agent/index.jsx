@@ -1,34 +1,42 @@
 import React from 'react'
 import PageForm from 'src/components/PageForm'
+import useAvailableLevels from 'src/hooks/useAvailableLevels'
 
 const Agent = () => {
-  return <PageForm formItems={formItems} />
+  const agentLevels = useAvailableLevels()
+  return <PageForm formItems={getFormItems(agentLevels)} />
 }
 
 export default Agent
 
-const formItems = [
+const getFormItems = (agentLevels) => [
+  {
+    label: '代理商名称',
+    comp: 'FormInput',
+    name: 'name',
+  },
+  {
+    label: '代理级别',
+    comp: 'FormSelect',
+    name: 'currLevelId',
+    titleKey: 'name',
+    options: agentLevels,
+  },
   {
     label: '手机号',
     comp: 'FormInput',
     name: 'phone',
   },
   {
-    label: '姓名',
+    label: '联系人',
     comp: 'FormInput',
-    name: 'username',
-    disabled: 'isEdit',
-  },
-  {
-    label: '昵称',
-    comp: 'FormInput',
-    name: 'nickname',
+    name: 'linkMan',
   },
   {
     comp: 'FormEnableRadio',
   },
   {
-    label: '描述',
+    label: '备注',
     comp: 'FormInput',
     type: 'textarea',
     name: 'note',

@@ -1,6 +1,7 @@
-import { Button, Divider, Switch } from 'antd'
+import { Button, Divider, Switch, Avatar } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { getDomain } from './envUtil'
 import { formatTime } from './timeUtil'
 
 export const tableOrder = {
@@ -23,18 +24,37 @@ export const getDateRow = (title, name) => ({
   render: (text, record) => <span>{formatTime(record[name])}</span>,
 })
 
-export const getLinkRow = (title, link, placeholderNames) => {
+export const getLinkRow = (title, link) => {
   return {
     title,
     render: (text, record) => {
       let finalLink = link
-      placeholderNames.forEach((item) => {
-        finalLink = finalLink.replace('::', record[item])
+      const linkArr = link.split('/')
+      linkArr.forEach((item) => {
+        if (item.startsWith(':')) {
+          finalLink = finalLink.replace(item, record[item.split(':')[1]])
+        }
       })
       return <Link to={finalLink}>查看</Link>
     },
   }
 }
+
+export const getExternalLinkRow = (url) => ({
+  title: '链接',
+  dataIndex: 'hashcode',
+  key: 'hashcode',
+  render: (text, record) => {
+    const link = `${url}${record.hashCode}`
+    return (
+      <span>
+        <Button size="small" onClick={() => window.open(link, '_blank')}>
+          打开
+        </Button>
+      </span>
+    )
+  },
+})
 
 export const getEnableRow = () => ({
   title: '已启用',
@@ -58,12 +78,24 @@ export const getSwitchRow = (update, title) => ({
   },
 })
 
-export const getActionRow = (getPath, deleteEntity) => ({
+export const changePsdAction = (selectEntity) => (record) => (
+  <span className="table-action" onClick={() => selectEntity(record)}>
+    修改密码
+  </span>
+)
+
+export const getActionRow = (getPath, deleteEntity, customAction) => ({
   title: '操作',
   key: 'action',
   render: (text, record) => (
     <>
       <Link to={getPath(record)}>编辑</Link>
+      {customAction && (
+        <>
+          <Divider type="vertical" />
+          {customAction(record)}
+        </>
+      )}
       {deleteEntity && (
         <>
           <Divider type="vertical" />
@@ -113,6 +145,13 @@ export const getDetailRow = (getPath) => ({
   title: '操作',
   key: 'action',
   render: (text, record) => <Link to={getPath(record)}>详情</Link>,
+})
+
+export const getAvatarRow = () => ({
+  title: '头像',
+  render: (text, record) => (
+    <Avatar size={45} src={`${getDomain()}${record.faceUrl}`} />
+  ),
 })
 
 export const getCustomRow = (title, getValue, width) => ({

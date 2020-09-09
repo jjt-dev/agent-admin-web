@@ -1,19 +1,25 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import PageList from 'src/components/PageList'
+import useAvailableLevels from 'src/hooks/useAvailableLevels'
 import { findById } from 'src/utils/common'
 import {
   getActionRow,
   getCustomRow,
   getDateRow,
+  getLinkRow,
   getRow,
   getSwitchRow,
   tableOrder,
 } from 'src/utils/tableUtil'
 
 const AgentList = () => {
-  const { agentLevels } = useSelector((state) => state.app)
-  return <PageList columns={getColumns(agentLevels)} />
+  const agentLevels = useAvailableLevels()
+  return (
+    <PageList
+      columns={getColumns(agentLevels)}
+      showAdd={agentLevels.length > 0}
+    />
+  )
 }
 
 export default AgentList
@@ -21,6 +27,7 @@ export default AgentList
 const getColumns = (agentLevels) => (deleteAgent, updateAgentStatus) => [
   tableOrder,
   getRow('代理商名称', 'name'),
+  getLinkRow('管理员', `/agent/:id/:name/admin/list`),
   getCustomRow(
     '代理级别',
     (record) => findById(agentLevels, record.currLevelId).name

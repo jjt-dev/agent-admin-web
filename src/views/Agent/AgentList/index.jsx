@@ -28,6 +28,7 @@ const getColumns = (agentLevels) => (deleteAgent, updateAgentStatus) => [
   tableOrder,
   getRow('代理商名称', 'name'),
   getLinkRow('管理员', `/agent/:id/:name/admin/list`),
+  getLinkRow('订单', `/agent/:id/:name/order/list`),
   getCustomRow(
     '代理级别',
     (record) => findById(agentLevels, record.currLevelId).name

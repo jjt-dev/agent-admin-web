@@ -78,6 +78,21 @@ export const getSwitchRow = (update, title) => ({
   },
 })
 
+export const getOperationRow = (title, name, action, callback) => ({
+  title: title,
+  key: name,
+  render: (text, record) => {
+    if (record[name]) {
+      return <span>是</span>
+    }
+    return (
+      <Button type="primary" size="small" onClick={() => callback(record)}>
+        确认{action}
+      </Button>
+    )
+  },
+})
+
 export const changePsdAction = (selectEntity) => (record) => (
   <span className="table-action" onClick={() => selectEntity(record)}>
     修改密码

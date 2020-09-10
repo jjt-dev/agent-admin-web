@@ -42,6 +42,7 @@ const App = () => {
   useEffect(() => {
     if (user) {
       dispatch(appAction.getAgentLevels())
+      dispatch(appAction.getAllCourses())
     }
   }, [dispatch, user])
 
@@ -52,9 +53,9 @@ const App = () => {
         'login-page': isLogin,
       })}
     >
-      {/* <Header user={user} /> */}
+      <Header user={user} />
       <main>
-        {/* <SideMenu /> */}
+        <SideMenu />
         <ErrorBoundary>
           <JjtBreadcrumb />
           <Router />

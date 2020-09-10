@@ -31,3 +31,5 @@ export const EntityStatus = {
   CREATE: '新增',
   EDIT: '编辑',
 }
+
+export const formItemHide = { visibility: 'hidden', height: 0, margin: 0 }

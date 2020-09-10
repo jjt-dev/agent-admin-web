@@ -8,3 +8,7 @@ export const loginPath = (username, password) =>
 
 export const changePsdPath = (oldPsd, newPsd) =>
   `/user/changePsw?oldPassword=${oldPsd}&newPsw=${newPsd}`
+
+// order
+export const updateOrderPath = (orderId, type) =>
+  `/client/account/branchAgent/${type}?orderId=${orderId}`

@@ -4,6 +4,7 @@ import AgentAdminList from './AgentAdminList'
 import AgentAdmin from './AgentAdmin'
 import AgentOrderList from './AgentOrderList'
 import AgentOrder from './AgentOrder'
+import AgentAccount from './AgentAccount'
 
 const agentRoute = [
   {
@@ -94,6 +95,16 @@ const agentRoute = [
       path: '/agent/:agentId/:agentName/order/list',
       params: ['agentId', 'agentName'],
       breadcrumbs: ['代理商列表', '订单列表', '编辑订单'],
+    },
+  },
+  {
+    path: '/agent/:agentId/:agentName/account',
+    menuPath: '/agent/list',
+    comp: AgentAccount,
+    back: {
+      path: '/agent/list',
+      params: ['agentId', 'agentName'],
+      breadcrumbs: ['代理商列表', '代理商账户信息'],
     },
   },
 ]

@@ -1,10 +1,16 @@
 import React from 'react'
-import { Switch, Redirect } from 'react-router'
+import { Redirect, Switch } from 'react-router'
 import { Route } from 'react-router-dom'
+
 import agentRoute from './Agent/agentRoute'
 import Login from './Login'
+import schoolRoute from './School/schoolRoute'
 
-export const routes = [...agentRoute, { path: '/login', comp: Login }]
+export const routes = [
+  ...agentRoute,
+  ...schoolRoute,
+  { path: '/login', comp: Login },
+]
 
 const Router = () => (
   <Switch>

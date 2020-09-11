@@ -33,3 +33,5 @@ export const EntityStatus = {
 }
 
 export const formItemHide = { visibility: 'hidden', height: 0, margin: 0 }
+
+export const agentUrl = process.env.REACT_APP_AGENT_URL

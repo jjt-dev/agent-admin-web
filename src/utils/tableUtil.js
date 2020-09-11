@@ -1,6 +1,7 @@
 import { Button, Divider, Switch, Avatar } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { copyToClipboard } from './common'
 import { getDomain } from './envUtil'
 import { formatTime } from './timeUtil'
 
@@ -50,6 +51,13 @@ export const getExternalLinkRow = (url) => ({
       <span>
         <Button size="small" onClick={() => window.open(link, '_blank')}>
           打开
+        </Button>
+        <Button
+          style={{ marginLeft: '5px' }}
+          size="small"
+          onClick={() => copyToClipboard(link)}
+        >
+          复制
         </Button>
       </span>
     )

@@ -1,12 +1,14 @@
 import { message, modal } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import useActiveRoute from 'src/hooks/useActiveRoute'
 import api from 'src/utils/api'
 
+import ChangePwd from '../ChangePwd'
 import CustomTable from '../CustomTable'
 import ListHeader from '../ListHeader'
 
 const { confirm } = modal
+
 const { useTableFetch } = CustomTable
 
 const PageList = ({
@@ -23,6 +25,7 @@ const PageList = ({
   title: defaultTitle,
   customClass = '',
 }) => {
+  const [entityToChangePwd, setEntityToChangePwd] = useState()
   const {
     editPath,
     title,
@@ -44,17 +47,10 @@ const PageList = ({
     addCallback = editPath
   }
 
-  const confirmUpdate = ({
-    status,
-    title,
-    titleValue,
-    path,
-    callback,
-    contentTitle,
-  }) => {
+  const confirmUpdate = ({ status, title, titleValue, path, callback }) => {
     confirm({
       title: `请问您确认要${status}该${title}吗?`,
-      content: `${contentTitle ?? title}名: ${titleValue}`,
+      content: `${title}名: ${titleValue}`,
       okText: '确定',
       cancelText: '取消',
       onOk: async () => {
@@ -94,6 +90,14 @@ const PageList = ({
     confirmUpdate(payload)
   }
 
+  const changePassword = async (newPassword) => {
+    await api.post(
+      `${apiPath}/changePsw?id=${entityToChangePwd.id}&psw=${newPassword}`
+    )
+    message.success('密码修改成功。')
+    setEntityToChangePwd(false)
+  }
+
   return (
     <div className={`page page-list ${customClass}`}>
       <div className="page-list-title">{defaultTitle ?? title}列表</div>
@@ -108,10 +112,21 @@ const PageList = ({
       )}
       <CustomTable
         {...tableList}
-        columns={columns(deleteEntity, updateEntityStatus)}
+        columns={columns(
+          deleteEntity,
+          updateEntityStatus,
+          setEntityToChangePwd
+        )}
         rowKey={rowKey}
         size={size}
       />
+      {entityToChangePwd && (
+        <ChangePwd
+          setVisible={setEntityToChangePwd}
+          title={`${title}${entityToChangePwd[titleProp]}`}
+          changePassword={changePassword}
+        />
+      )}
     </div>
   )
 }

@@ -2,10 +2,12 @@ import React from 'react'
 import PageList from 'src/components/PageList'
 import useAvailableLevels from 'src/hooks/useAvailableLevels'
 import { findById } from 'src/utils/common'
+import { agentUrl } from 'src/utils/const'
 import {
   getActionRow,
   getCustomRow,
   getDateRow,
+  getExternalLinkRow,
   getLinkRow,
   getRow,
   getSwitchRow,
@@ -27,6 +29,7 @@ export default AgentList
 const getColumns = (agentLevels) => (deleteAgent, updateAgentStatus) => [
   tableOrder,
   getRow('代理商名称', 'name'),
+  getExternalLinkRow(agentUrl),
   getLinkRow('管理员', `/agent/:id/:name/admin/list`),
   getLinkRow('订单', `/agent/:id/:name/order/list`),
   getCustomRow(

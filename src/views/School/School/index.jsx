@@ -29,20 +29,37 @@ const getFormItems = (allCourses) => [
     message: '请上传头像',
   },
   {
-    label: '手机号',
-    comp: 'FormInput',
-    name: 'phone',
-  },
-  {
     label: '联系人',
     comp: 'FormInput',
     name: 'linkMan',
   },
   {
+    label: '联系电话',
+    comp: 'FormInput',
+    name: 'linkPhone',
+  },
+  {
     comp: 'FormEnableRadio',
   },
   {
-    label: '备注',
+    label: '地址',
+    comp: 'FormInput',
+    name: 'address',
+  },
+  {
+    label: '营业执照',
+    comp: 'FormInput',
+    name: 'businessLicenseUrl',
+    required: false,
+  },
+  {
+    label: '网站',
+    comp: 'FormInput',
+    name: 'website',
+    required: false,
+  },
+  {
+    label: '描述',
     comp: 'FormInput',
     type: 'textarea',
     name: 'note',

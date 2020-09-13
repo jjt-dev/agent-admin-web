@@ -5,7 +5,7 @@ import PageList from 'src/components/PageList'
 import useActiveRoute from 'src/hooks/useActiveRoute'
 import useTableFetch from 'src/hooks/useTableFetch'
 import api from 'src/utils/api'
-import { agentUpdOrderPath } from 'src/utils/httpUtil'
+import { schoolUpdOrderPath } from 'src/utils/httpUtil'
 import {
   getCustomRow,
   getDateRow,
@@ -16,11 +16,11 @@ import {
 
 const { confirm } = modal
 
-const AgentOrderList = () => {
-  const { agentId, agent } = useParams()
+const SchoolOrderList = () => {
+  const { schoolId, school } = useParams()
   const { apiPath } = useActiveRoute()
-  const adminList = useTableFetch(`${apiPath}/page`, { agentId })
-  const addOrderPath = `/agent/${agentId}/${agent}/order/edit`
+  const adminList = useTableFetch(`${apiPath}/page`, { schoolId })
+  const addOrderPath = `/school/${schoolId}/${school}/order/edit`
 
   const updateOrder = (order, type) => {
     const msg = updateOrderMessage[type]
@@ -31,7 +31,7 @@ const AgentOrderList = () => {
       okText: '确定',
       cancelText: '取消',
       onOk: async () => {
-        await api.post(agentUpdOrderPath(order.id, type))
+        await api.post(schoolUpdOrderPath(order.id, type))
         adminList.fetchTable()
         message.success(`成功${msg}`)
       },
@@ -45,13 +45,13 @@ const AgentOrderList = () => {
     <PageList
       columns={getColumns(updateOrder)}
       defaultTableList={adminList}
-      title={`${agent}订单`}
+      title={`${school}订单`}
       addCallback={addOrderPath}
     />
   )
 }
 
-export default AgentOrderList
+export default SchoolOrderList
 
 const getColumns = (updateOrder) => () => [
   tableOrder,
@@ -69,5 +69,5 @@ const getColumns = (updateOrder) => () => [
 
 const updateOrderMessage = {
   confirmPay: '完成支付',
-  comfirmTransfer: '转移订单给代理商',
+  comfirmTransfer: '转移订单给学校',
 }

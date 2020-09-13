@@ -1,4 +1,4 @@
-export const TOKEN = 'token'
+export const TOKEN = 'agentToken'
 export const AGENT_CODE = 'agentCode'
 export const PAGE_RELOADED = 'pageReloaded'
 

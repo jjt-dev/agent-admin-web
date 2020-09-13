@@ -61,7 +61,7 @@ const getColumns = (updateOrder) => () => [
   getOperationRow('是否已支付', 'isPayed', '支付', (record) =>
     updateOrder(record, 'confirmPay')
   ),
-  getOperationRow('是否已转移给代理', 'isTransfered', '转移', (record) =>
+  getOperationRow('是否已转移给学校', 'isTransfered', '转移', (record) =>
     updateOrder(record, 'comfirmTransfer')
   ),
   getDateRow('创建时间', 'createTime'),

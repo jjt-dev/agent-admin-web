@@ -23,14 +23,14 @@ const getFormItems = (agentLevels) => [
     options: agentLevels,
   },
   {
-    label: '手机号',
-    comp: 'FormInput',
-    name: 'phone',
-  },
-  {
     label: '联系人',
     comp: 'FormInput',
     name: 'linkMan',
+  },
+  {
+    label: '手机号',
+    comp: 'FormInput',
+    name: 'phone',
   },
   {
     comp: 'FormEnableRadio',

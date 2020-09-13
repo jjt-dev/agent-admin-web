@@ -2,12 +2,15 @@ import { Table } from 'antd'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import PageCustom from 'src/components/PageCustom'
-import { getRow, tableOrder, getCustomRow } from 'src/utils/tableUtil'
 import { findById } from 'src/utils/common'
+import { getCustomRow, getRow, tableOrder } from 'src/utils/tableUtil'
+import { useAccountPath } from 'src/utils/httpUtil'
+import useFetch from 'src/hooks/useFetch'
 
 const UserAccount = () => {
   const { user, allCourses } = useSelector((state) => state.app)
-  const { agentInfo, accounts } = user || {}
+  const { agentInfo } = user || {}
+  const [accounts = []] = useFetch(useAccountPath)
 
   return (
     <PageCustom title={`${agentInfo?.name}账户信息`}>

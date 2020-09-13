@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import PageForm from 'src/components/PageForm'
 import useFetch from 'src/hooks/useFetch'
+import { agentInfoPath, useAccountPath } from 'src/utils/httpUtil'
+import { findById } from 'src/utils/common'
 
 const AgentOrder = () => {
   const { allCourses } = useSelector((state) => state.app)
   const { agentId, agentName } = useParams()
-  const [{ courseId, price } = {}] = useFetch(
-    `/client/account/branchAgent/agentInfo?agentId=${agentId}`
-  )
+  const [{ courseId, price } = {}] = useFetch(agentInfoPath(agentId))
+  const [accounts = []] = useFetch(useAccountPath)
 
   return (
     <PageForm
@@ -18,6 +19,7 @@ const AgentOrder = () => {
       backPath={`/agent/${agentId}/${agentName}/order/list`}
       defaultValues={{ courseId, price, targetAgentId: agentId }}
       apiPath="/client/account/branchAgent/createOrder"
+      listens={getFormListens(accounts)}
     />
   )
 }
@@ -36,6 +38,12 @@ const getFormItems = (allCourses) => [
     name: 'courseId',
     titleKey: 'name',
     options: allCourses,
+  },
+  {
+    label: '账户余额',
+    name: 'balance',
+    comp: 'FormInput',
+    disabled: true,
   },
   {
     label: '订单名额',
@@ -65,5 +73,18 @@ const getFormItems = (allCourses) => [
     name: 'isTransfered',
     initialValue: false,
     labelCol: { span: 8 },
+  },
+]
+
+const getFormListens = (accounts) => [
+  {
+    origin: 'amount',
+    target: 'courseId',
+    prop: 'max',
+    getValue: (courseId, form) => {
+      const account = findById(accounts, courseId, 'courseId')
+      form.setFieldsValue({ balance: account.balance })
+      return account.balance
+    },
   },
 ]

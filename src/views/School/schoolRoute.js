@@ -4,6 +4,7 @@ import SchoolAdminList from './SchoolAdminList'
 import SchoolAdmin from './SchoolAdmin'
 import SchoolOrderList from './SchoolOrderList'
 import SchoolOrder from './SchoolOrder'
+import SchoolAccount from './SchoolAccount'
 
 const schoolRoute = [
   {
@@ -94,6 +95,16 @@ const schoolRoute = [
       path: '/school/:schoolId/:school/order/list',
       params: ['schoolId', 'school'],
       breadcrumbs: ['学校列表', '订单列表', '编辑订单'],
+    },
+  },
+  {
+    path: '/school/:schoolId/:school/account',
+    menuPath: '/school/list',
+    comp: SchoolAccount,
+    back: {
+      path: '/school/list',
+      params: ['schoolId', 'school'],
+      breadcrumbs: ['学校列表', '学校账户信息'],
     },
   },
 ]

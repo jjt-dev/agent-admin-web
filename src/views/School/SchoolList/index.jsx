@@ -26,6 +26,7 @@ const getColumns = (deleteSchool) => [
   getExternalLinkRow(schoolUrl),
   getLinkRow('管理员', `/school/:id/:name/admin/list`),
   getLinkRow('订单', `/school/:id/:name/order/list`),
+  getLinkRow('账户信息', `/school/:id/:name/account`),
   getRow('联系人', 'linkMan'),
   getRow('联系人电话', 'linkPhone'),
   getDateRow('创建时间', 'createTime'),

@@ -23,3 +23,6 @@ export const agentInfoPath = (agentId) =>
 // school
 export const schoolUpdOrderPath = (orderId, type) =>
   `/client/account/school/${type}?orderId=${orderId}`
+
+export const schoolAccountPath = (schoolId) =>
+  `/client/account/school/accountInfos?agentId=${schoolId}`

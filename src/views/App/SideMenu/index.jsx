@@ -6,12 +6,15 @@ import {
   AccountBookOutlined,
 } from '@ant-design/icons'
 import { Menu } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useHistory, useLocation } from 'react-router'
+import useUser from 'src/hooks/useUser'
 
 const SideMenu = () => {
   const history = useHistory()
   const location = useLocation()
+  const { isLastAgentLevel } = useUser()
+  const menus = useMemo(() => getMenus(isLastAgentLevel), [isLastAgentLevel])
   const [selectedKeys, setSelectedKeys] = useState([menus[0].key])
 
   const handleClick = (e) => {
@@ -24,7 +27,7 @@ const SideMenu = () => {
     if (menu) {
       setSelectedKeys([menu.key])
     }
-  }, [location.pathname, setSelectedKeys])
+  }, [location.pathname, menus, setSelectedKeys])
 
   return (
     <Menu
@@ -33,40 +36,43 @@ const SideMenu = () => {
       mode="inline"
       onClick={handleClick}
     >
-      {menus.map((menu) => {
-        return (
-          <Menu.Item key={menu.key}>
-            {menu.icon}
-            <span>{menu.title}</span>
-          </Menu.Item>
-        )
-      })}
+      {menus
+        .filter((item) => item.show !== false)
+        .map((menu) => {
+          return (
+            <Menu.Item key={menu.key}>
+              {menu.icon}
+              <span>{menu.title}</span>
+            </Menu.Item>
+          )
+        })}
     </Menu>
   )
 }
 
 export default SideMenu
 
-const menus = [
+const getMenus = (isLastAgentLevel) => [
   {
     key: '0',
-    path: '/agent/list',
-    prefix: '/agent',
-    icon: <UserOutlined />,
-    title: '我的代理',
-  },
-  {
-    key: '1',
-    path: '/school/list',
-    prefix: '/school',
-    icon: <HomeOutlined />,
-    title: '我的学校',
-  },
-  {
-    key: '2',
     path: '/system/account',
     prefix: '/system',
     icon: <AccountBookOutlined />,
     title: '我的账号',
+  },
+  {
+    key: '1',
+    path: '/agent/list',
+    prefix: '/agent',
+    icon: <UserOutlined />,
+    title: '我的代理',
+    show: !isLastAgentLevel,
+  },
+  {
+    key: '2',
+    path: '/school/list',
+    prefix: '/school',
+    icon: <HomeOutlined />,
+    title: '我的学校',
   },
 ]

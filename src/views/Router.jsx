@@ -22,7 +22,7 @@ const Router = () => (
     })}
     <Redirect
       to={{
-        pathname: '/agent/list',
+        pathname: '/system/account',
       }}
     />
   </Switch>

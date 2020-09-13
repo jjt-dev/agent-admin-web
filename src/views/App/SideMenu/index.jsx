@@ -1,6 +1,10 @@
 import './index.less'
 
-import { HomeOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  HomeOutlined,
+  UserOutlined,
+  AccountBookOutlined,
+} from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router'
@@ -57,5 +61,12 @@ const menus = [
     prefix: '/school',
     icon: <HomeOutlined />,
     title: '我的学校',
+  },
+  {
+    key: '2',
+    path: '/system/account',
+    prefix: '/system',
+    icon: <AccountBookOutlined />,
+    title: '我的账号',
   },
 ]

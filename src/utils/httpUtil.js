@@ -25,4 +25,4 @@ export const schoolUpdOrderPath = (orderId, type) =>
   `/client/account/school/${type}?orderId=${orderId}`
 
 export const schoolAccountPath = (schoolId) =>
-  `/client/account/school/accountInfos?agentId=${schoolId}`
+  `/client/account/school/accountInfos?schoolId=${schoolId}`

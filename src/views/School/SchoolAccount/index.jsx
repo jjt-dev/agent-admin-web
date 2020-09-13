@@ -3,12 +3,12 @@ import React from 'react'
 import { useParams } from 'react-router'
 import PageCustom from 'src/components/PageCustom'
 import useFetch from 'src/hooks/useFetch'
+import { schoolAccountPath } from 'src/utils/httpUtil'
 import { getRow, tableOrder } from 'src/utils/tableUtil'
-import { agentAccountPath } from 'src/utils/httpUtil'
 
 const SchoolAccount = () => {
   const { schoolId, school } = useParams()
-  const [agentAccount = []] = useFetch(agentAccountPath(schoolId))
+  const [agentAccount = []] = useFetch(schoolAccountPath(schoolId))
 
   return (
     <PageCustom title={`${school}账户信息`}>

@@ -174,7 +174,7 @@ export const getAvatarRow = ({
   name = 'faceUrl',
   title = '头像',
   size = 45,
-}) => ({
+} = {}) => ({
   title,
   key: name,
   render: (text, record) => {

@@ -26,6 +26,7 @@ const PageForm = ({
   backPath: customBackPath,
   apiPath: customApiPath,
   listens,
+  handleFinish,
 }) => {
   const history = useHistory()
   const [formItems, setFormItems] = useState(defaultFormItems)
@@ -38,8 +39,17 @@ const PageForm = ({
   const backPath = customBackPath ?? back?.path
 
   useEffect(() => {
-    form.setFieldsValue(entity ?? null)
-  }, [entity, form])
+    if (entity) {
+      form.setFieldsValue(entity)
+      formItems.forEach((item) => {
+        if (item.editFn) {
+          form.setFieldsValue({ [item.name]: item.editFn(entity) })
+        }
+      })
+    } else {
+      form.setFieldsValue(null)
+    }
+  }, [entity, form, formItems])
 
   useEffect(() => {
     setFormItems(defaultFormItems)
@@ -79,6 +89,9 @@ const PageForm = ({
   }, [defaultValues, form, listenActions])
 
   const onFinish = async (values) => {
+    if (handleFinish) {
+      values = handleFinish(values)
+    }
     if (!!entityId) {
       values.id = entityId
     }

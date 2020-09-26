@@ -4,6 +4,7 @@ import PageForm from 'src/components/PageForm'
 
 const School = () => {
   const { allCourses } = useSelector((state) => state.app)
+
   return <PageForm formItems={getFormItems(allCourses)} />
 }
 
@@ -18,9 +19,11 @@ const getFormItems = (allCourses) => [
   {
     label: '科目',
     comp: 'FormSelect',
-    name: 'courseId',
+    name: 'courseIds',
     titleKey: 'name',
     options: allCourses,
+    mode: 'multiple',
+    editFn: (school) => school.courseIds.split(',').map((id) => Number(id)),
   },
   {
     label: '头像',

@@ -1,25 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import PageForm from 'src/components/PageForm'
 import useFetch from 'src/hooks/useFetch'
-import { agentInfoPath, useAccountPath } from 'src/utils/httpUtil'
 import { findById } from 'src/utils/common'
+import { useTypes } from 'src/utils/const'
+import { agentInfoPath, useAccountPath } from 'src/utils/httpUtil'
 
 const AgentOrder = () => {
   const { allCourses } = useSelector((state) => state.app)
   const { agentId, agentName } = useParams()
-  const [{ courseId, price } = {}] = useFetch(agentInfoPath(agentId))
+  const [useType, setUseType] = useState(useTypes.exam.id)
+  const [{ price } = {}, fetchAgent] = useFetch(agentInfoPath(agentId, useType))
   const [accounts = []] = useFetch(useAccountPath)
+
+  const fieldsChangeCallback = (field) => {
+    const [fieldName] = field.name
+    if (fieldName === 'useType') {
+      setUseType(field.value)
+    }
+  }
+
+  useEffect(() => {
+    fetchAgent(agentInfoPath(agentId, useType))
+  }, [agentId, fetchAgent, useType])
 
   return (
     <PageForm
       formItems={getFormItems(allCourses)}
       titlePrefix={agentName}
       backPath={`/agent/${agentId}/${agentName}/order/list`}
-      defaultValues={{ courseId, price, targetAgentId: agentId }}
+      defaultValues={{
+        price,
+        targetAgentId: agentId,
+        useType,
+      }}
       apiPath="/client/account/branchAgent/createOrder"
       listens={getFormListens(accounts)}
+      fieldsChangeCallback={fieldsChangeCallback}
     />
   )
 }
@@ -38,6 +57,13 @@ const getFormItems = (allCourses) => [
     name: 'courseId',
     titleKey: 'name',
     options: allCourses,
+  },
+  {
+    label: '订单类型',
+    comp: 'FormSelect',
+    name: 'useType',
+    titleKey: 'name',
+    options: Object.values(useTypes),
   },
   {
     label: '账户余额',

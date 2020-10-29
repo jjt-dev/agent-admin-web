@@ -5,6 +5,8 @@ import PageList from 'src/components/PageList'
 import useActiveRoute from 'src/hooks/useActiveRoute'
 import useTableFetch from 'src/hooks/useTableFetch'
 import api from 'src/utils/api'
+import { findUseType } from 'src/utils/common'
+import { useTypes } from 'src/utils/const'
 import { schoolUpdOrderPath } from 'src/utils/httpUtil'
 import {
   getCustomRow,
@@ -56,6 +58,7 @@ export default SchoolOrderList
 const getColumns = (updateOrder) => () => [
   tableOrder,
   getRow('科目', 'courseName'),
+  orderUseTypeRow,
   getRow('订单数量', 'amount'),
   getCustomRow('订单单价', (record) => `${record.price}元`),
   getOperationRow('是否已支付', 'isPayed', '支付', (record) =>
@@ -70,4 +73,14 @@ const getColumns = (updateOrder) => () => [
 const updateOrderMessage = {
   confirmPay: '完成支付',
   comfirmTransfer: '转移订单给学校',
+}
+
+const orderUseTypeRow = {
+  ...getCustomRow('订单类型', (record) => findUseType(record.useType).name),
+  dataIndex: 'useType',
+  filterMultiple: false,
+  filters: Object.values(useTypes).map((item) => ({
+    text: item.name,
+    value: item.id,
+  })),
 }

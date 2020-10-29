@@ -1,6 +1,6 @@
 import { message } from 'antd'
 
-import { EntityStatus } from './const'
+import { EntityStatus, useTypes } from './const'
 
 export const findIndexById = (arrs, id) => {
   const result = arrs.findIndex((item) => item.id === id)
@@ -73,4 +73,8 @@ export const copyToClipboard = (clipboardContent) => {
 
 export const getStatus = (isEdit) => {
   return isEdit ? EntityStatus.EDIT : EntityStatus.CREATE
+}
+
+export const findUseType = (useTypeId) => {
+  return Object.values(useTypes).find((item) => item.id === String(useTypeId))
 }

@@ -27,6 +27,7 @@ const PageForm = ({
   apiPath: customApiPath,
   listens,
   handleFinish,
+  fieldsChangeCallback,
 }) => {
   const history = useHistory()
   const [formItems, setFormItems] = useState(defaultFormItems)
@@ -115,6 +116,7 @@ const PageForm = ({
         [firstField.name[0]]: firstField.value,
       }
       listenActions(result)
+      fieldsChangeCallback && fieldsChangeCallback(firstField)
     }
   }
 

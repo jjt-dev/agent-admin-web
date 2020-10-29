@@ -17,8 +17,8 @@ export const agentUpdOrderPath = (orderId, type) =>
 export const agentAccountPath = (agentId) =>
   `/client/account/branchAgent/accountInfos?agentId=${agentId}`
 
-export const agentInfoPath = (agentId) =>
-  `/client/account/branchAgent/agentInfo?agentId=${agentId}`
+export const agentInfoPath = (agentId, useType) =>
+  `/client/account/branchAgent/agentInfo?agentId=${agentId}&useType=${useType}`
 
 // school
 export const schoolUpdOrderPath = (orderId, type) =>

@@ -2,7 +2,7 @@ import { Table } from 'antd'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import PageCustom from 'src/components/PageCustom'
-import { findById } from 'src/utils/common'
+import { findById, findUseType } from 'src/utils/common'
 import { getCustomRow, getRow, tableOrder } from 'src/utils/tableUtil'
 import { useAccountPath } from 'src/utils/httpUtil'
 import useFetch from 'src/hooks/useFetch'
@@ -32,4 +32,5 @@ const getColumns = (allCourses) => [
   tableOrder,
   getCustomRow('科目', (record) => findById(allCourses, record.courseId).name),
   getRow('余额', 'balance'),
+  getCustomRow('余额类型', (record) => findUseType(record.useType).name),
 ]

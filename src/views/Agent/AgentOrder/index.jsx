@@ -4,27 +4,31 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import PageForm from 'src/components/PageForm'
 import useFetch from 'src/hooks/useFetch'
-import { findById } from 'src/utils/common'
 import { useTypes } from 'src/utils/const'
-import { agentInfoPath, useAccountPath } from 'src/utils/httpUtil'
+import { agentInfoPath } from 'src/utils/httpUtil'
 
 const AgentOrder = () => {
   const { allCourses } = useSelector((state) => state.app)
   const { agentId, agentName } = useParams()
+  const [courseId, setCourseId] = useState()
   const [useType, setUseType] = useState(useTypes.exam.id)
-  const [{ price } = {}, fetchAgent] = useFetch(agentInfoPath(agentId, useType))
-  const [accounts = []] = useFetch(useAccountPath)
+  const [{ price, balance } = {}, fetchAgent] = useFetch()
 
   const fieldsChangeCallback = (field) => {
     const [fieldName] = field.name
     if (fieldName === 'useType') {
       setUseType(field.value)
     }
+    if (fieldName === 'courseId') {
+      setCourseId(field.value)
+    }
   }
 
   useEffect(() => {
-    fetchAgent(agentInfoPath(agentId, useType))
-  }, [agentId, fetchAgent, useType])
+    if (courseId) {
+      fetchAgent(agentInfoPath(courseId, agentId, useType))
+    }
+  }, [agentId, courseId, fetchAgent, useType])
 
   return (
     <PageForm
@@ -33,11 +37,11 @@ const AgentOrder = () => {
       backPath={`/agent/${agentId}/${agentName}/order/list`}
       defaultValues={{
         price,
-        targetAgentId: agentId,
+        balance,
         useType,
+        targetAgentId: agentId,
       }}
       apiPath="/client/account/branchAgent/createOrder"
-      listens={getFormListens(accounts)}
       fieldsChangeCallback={fieldsChangeCallback}
     />
   )
@@ -99,18 +103,5 @@ const getFormItems = (allCourses) => [
     name: 'isTransfered',
     initialValue: false,
     labelCol: { span: 8 },
-  },
-]
-
-const getFormListens = (accounts) => [
-  {
-    origin: 'amount',
-    target: 'courseId',
-    prop: 'max',
-    getValue: (courseId, form) => {
-      const account = findById(accounts, courseId, 'courseId')
-      form.setFieldsValue({ balance: account.balance })
-      return account.balance
-    },
   },
 ]

@@ -1,27 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import PageForm from 'src/components/PageForm'
-import { findById } from 'src/utils/common'
-import { useAccountPath } from 'src/utils/httpUtil'
-import useFetch from 'src/hooks/useFetch'
+import { useTypes } from 'src/utils/const'
 
 const SchoolOrder = () => {
-  const { allCourses } = useSelector((state) => state.app)
+  const { allCourses, user } = useSelector((state) => state.app)
   const { schoolId, school } = useParams()
-  const [accounts = []] = useFetch(useAccountPath)
+  const [courseId, setCourseId] = useState()
+  const [account, setAccount] = useState()
 
-  if (allCourses)
-    return (
-      <PageForm
-        formItems={getFormItems(allCourses)}
-        titlePrefix={school}
-        backPath={`/school/${schoolId}/${school}/order/list`}
-        defaultValues={{ schoolId }}
-        apiPath="/client/account/school/createOrder"
-        listens={getFormListens(accounts)}
-      />
-    )
+  const fieldsChangeCallback = (field) => {
+    const [fieldName] = field.name
+    if (fieldName === 'courseId') {
+      setCourseId(field.value)
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      const account = user.accounts.find(
+        (item) =>
+          item.courseId === courseId &&
+          String(item.useType) === useTypes.exam.id
+      )
+      setAccount(account)
+    }
+  }, [courseId, user])
+
+  return (
+    <PageForm
+      formItems={getFormItems(allCourses)}
+      titlePrefix={school}
+      backPath={`/school/${schoolId}/${school}/order/list`}
+      defaultValues={{
+        schoolId,
+        price: account?.price,
+        balance: account?.balance,
+      }}
+      apiPath="/client/account/school/createOrder"
+      fieldsChangeCallback={fieldsChangeCallback}
+    />
+  )
 }
 
 export default SchoolOrder
@@ -68,23 +88,10 @@ const getFormItems = (allCourses) => [
     wrapperCol: { offset: 3 },
   },
   {
-    label: '是否转移名额给代理',
+    label: '是否转移名额给学校',
     comp: 'FormEnableRadio',
     name: 'isTransfered',
     initialValue: false,
     labelCol: { span: 8 },
-  },
-]
-
-const getFormListens = (accounts) => [
-  {
-    origin: 'amount',
-    target: 'courseId',
-    prop: 'max',
-    getValue: (courseId, form) => {
-      const account = findById(accounts, courseId, 'courseId')
-      form.setFieldsValue({ balance: account.balance })
-      return account.balance
-    },
   },
 ]

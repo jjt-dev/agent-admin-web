@@ -1,14 +1,20 @@
 import { message, Modal, Table } from 'antd'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import * as appAction from 'src/actions/app'
 import PageCustom from 'src/components/PageCustom'
-import useFetch from 'src/hooks/useFetch'
 import api from 'src/utils/api'
-import { getRow, tableOrder, getSwitchRow } from 'src/utils/tableUtil'
+import { getRow, getSwitchRow, tableOrder } from 'src/utils/tableUtil'
 
 const { confirm } = Modal
 
 const SettingList = () => {
-  const [settings = [], fetchSettings] = useFetch('/user/uploadRight/page')
+  const dispatch = useDispatch()
+  const { allUploadSettings } = useSelector((state) => state.app)
+
+  const getAllUploadSettings = () => {
+    dispatch(appAction.getAllUploadSettings())
+  }
 
   const updatePermission = (record) => {
     const status = record.canUpload ? '禁用' : '启用'
@@ -20,7 +26,7 @@ const SettingList = () => {
       onOk: async () => {
         await api.post(`/user/updateUploadRight?courseId=${record.id}`)
         message.success(`科目${status}上传权限成功`)
-        fetchSettings()
+        getAllUploadSettings()
       },
       onCancel() {
         console.log('Cancel')
@@ -33,7 +39,7 @@ const SettingList = () => {
       <Table
         rowKey="id"
         columns={getColumns(updatePermission)}
-        dataSource={settings}
+        dataSource={allUploadSettings}
         style={{ width: '600px', margin: '0 auto' }}
         pagination={false}
         bordered

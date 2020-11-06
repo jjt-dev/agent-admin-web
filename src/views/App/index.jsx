@@ -43,6 +43,7 @@ const App = () => {
     if (user) {
       dispatch(appAction.getAgentLevels())
       dispatch(appAction.getAllCourses())
+      dispatch(appAction.getAllUploadSettings())
     }
   }, [dispatch, user])
 
@@ -55,7 +56,7 @@ const App = () => {
     >
       {/* <Header user={user} /> */}
       <main>
-        <SideMenu />
+        {/* <SideMenu /> */}
         <ErrorBoundary>
           <JjtBreadcrumb />
           <Router />

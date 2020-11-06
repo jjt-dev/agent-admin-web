@@ -6,6 +6,7 @@ import {
   APP_OAUTH_USER,
   GET_AGENT_LEVELS,
   GET_ALL_COURSES,
+  GET_ALL_UPLOAD_SETTING,
 } from 'src/actions/app'
 
 const initState = {
@@ -13,6 +14,7 @@ const initState = {
   user: null,
   agentLevels: [],
   allCourses: [],
+  allUploadSettings: [],
 }
 
 const app = handleActions(
@@ -45,6 +47,12 @@ const app = handleActions(
       return {
         ...state,
         allCourses: payload,
+      }
+    },
+    [GET_ALL_UPLOAD_SETTING]: (state, { payload }) => {
+      return {
+        ...state,
+        allUploadSettings: payload,
       }
     },
   },

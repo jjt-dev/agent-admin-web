@@ -8,6 +8,7 @@ export const APP_OAUTH_USER = 'APP_OAUTH_USER'
 
 export const GET_AGENT_LEVELS = 'GET_AGENT_LEVELS'
 export const GET_ALL_COURSES = 'GET_ALL_COURSES'
+export const GET_ALL_UPLOAD_SETTING = 'GET_ALL_UPLOAD_SETTING'
 
 // 显示/隐藏顶层loading bar
 export const showLoadingBar = createAction(APP_SHOW_LOADING)
@@ -24,4 +25,8 @@ export const getAgentLevels = createAction(GET_AGENT_LEVELS, () =>
 
 export const getAllCourses = createAction(GET_ALL_COURSES, () =>
   api.get(`/config/course/list`)
+)
+
+export const getAllUploadSettings = createAction(GET_ALL_UPLOAD_SETTING, () =>
+  api.get(`/user/uploadRight/page`)
 )

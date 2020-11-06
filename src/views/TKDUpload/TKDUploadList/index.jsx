@@ -1,26 +1,28 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import PageList from 'src/components/PageList'
+import { findById } from 'src/utils/common'
 import {
   getActionRow,
   getCustomRow,
   getDateRow,
-  getLinkRow,
   getRow,
   tableOrder,
 } from 'src/utils/tableUtil'
 
 const TKDUploadList = () => {
-  return <PageList columns={getColumns} size="small" />
+  const { allCourses, allUploadSettings } = useSelector((state) => state.app)
+
+  return <PageList columns={getColumns(allCourses)} size="small" />
 }
 
 export default TKDUploadList
 
-const getColumns = () => [
+const getColumns = (allCourses) => () => [
   tableOrder,
+  getCustomRow('科目', (record) => findById(allCourses, record.courseId).name),
   getRow('考试名称', 'title'),
-  // getCustomRow('状态', record=>),
   getDateRow('申请时间', 'createTime'),
   getDateRow('处理时间', 'dealTime'),
-  getLinkRow('管理员', `/school/:id/:name/admin/list`),
   getActionRow((record) => `/school/edit/${record.id}`),
 ]

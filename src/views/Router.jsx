@@ -6,11 +6,13 @@ import agentRoute from './Agent/agentRoute'
 import Login from './Login'
 import schoolRoute from './School/schoolRoute'
 import systemRoute from './System/systemRoute'
+import tkdUploadRoute from './TKDUpload/tkdUploadRoute'
 
 export const routes = [
   ...agentRoute,
   ...schoolRoute,
   ...systemRoute,
+  ...tkdUploadRoute,
   { path: '/login', comp: Login },
 ]
 

@@ -1,3 +1,4 @@
+import Button from 'antd/es/button'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import PageList from 'src/components/PageList'
@@ -26,3 +27,14 @@ const getColumns = (allCourses) => () => [
   getDateRow('处理时间', 'dealTime'),
   getActionRow((record) => `/school/edit/${record.id}`),
 ]
+
+const customAction = (allUploadSettings) => (record) => {
+  const { canUpload } = findById(allUploadSettings, record.courseId)
+  if (!canUpload) {
+    return record.isDealt ? (
+      '已提交申请'
+    ) : (
+      <Button type="primary">提交申请</Button>
+    )
+  }
+}

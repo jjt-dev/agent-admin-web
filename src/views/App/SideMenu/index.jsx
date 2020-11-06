@@ -5,6 +5,7 @@ import {
   UserOutlined,
   AccountBookOutlined,
   CloudUploadOutlined,
+  SettingOutlined,
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState, useMemo } from 'react'
@@ -82,5 +83,12 @@ const getMenus = (isLastAgentLevel) => [
     prefix: '/tkd-upload',
     icon: <CloudUploadOutlined />,
     title: '上传中跆协',
+  },
+  {
+    key: '4',
+    path: '/setting/list',
+    prefix: '/setting',
+    icon: <SettingOutlined />,
+    title: '参数设置',
   },
 ]

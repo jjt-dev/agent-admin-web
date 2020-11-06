@@ -71,16 +71,16 @@ export const getEnableRow = () => ({
   render: (text, record) => <span>{record.isEnable ? '是' : '否'}</span>,
 })
 
-export const getSwitchRow = (update, title) => ({
+export const getSwitchRow = (update, title, key = 'isEnable') => ({
   title: title ?? '状态',
-  key: 'isEnable',
+  key,
   render: (text, record) => {
     return (
       <Switch
         onChange={() => update(record)}
         checkedChildren="启用"
         unCheckedChildren="禁用"
-        checked={record.isEnable}
+        checked={record[key]}
       />
     )
   },

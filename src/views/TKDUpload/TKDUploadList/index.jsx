@@ -1,15 +1,12 @@
 import React from 'react'
 import PageList from 'src/components/PageList'
-import { schoolUrl } from 'src/utils/const'
 import {
-  getAvatarRow,
-  getDateRow,
-  getExternalLinkRow,
-  getRow,
-  getSwitchRow,
-  tableOrder,
-  getLinkRow,
   getActionRow,
+  getCustomRow,
+  getDateRow,
+  getLinkRow,
+  getRow,
+  tableOrder,
 } from 'src/utils/tableUtil'
 
 const TKDUploadList = () => {
@@ -18,17 +15,12 @@ const TKDUploadList = () => {
 
 export default TKDUploadList
 
-const getColumns = (deleteSchool) => [
+const getColumns = () => [
   tableOrder,
-  getRow('学校名称', 'name'),
-  getAvatarRow({ name: 'logoUrl', size: 30 }),
-  getSwitchRow(),
-  getExternalLinkRow(schoolUrl),
+  getRow('考试名称', 'title'),
+  // getCustomRow('状态', record=>),
+  getDateRow('申请时间', 'createTime'),
+  getDateRow('处理时间', 'dealTime'),
   getLinkRow('管理员', `/school/:id/:name/admin/list`),
-  getLinkRow('订单', `/school/:id/:name/order/list`),
-  getLinkRow('账户信息', `/school/:id/:name/account`),
-  getRow('联系人', 'linkMan'),
-  getRow('联系人电话', 'linkPhone'),
-  getDateRow('创建时间', 'createTime'),
-  getActionRow((record) => `/school/edit/${record.id}`, deleteSchool),
+  getActionRow((record) => `/school/edit/${record.id}`),
 ]

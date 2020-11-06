@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom'
 import agentRoute from './Agent/agentRoute'
 import Login from './Login'
 import schoolRoute from './School/schoolRoute'
+import settingRoute from './Setting/settingRoute'
 import systemRoute from './System/systemRoute'
 import tkdUploadRoute from './TKDUpload/tkdUploadRoute'
 
@@ -13,6 +14,7 @@ export const routes = [
   ...schoolRoute,
   ...systemRoute,
   ...tkdUploadRoute,
+  ...settingRoute,
   { path: '/login', comp: Login },
 ]
 

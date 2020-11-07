@@ -11,9 +11,12 @@ import {
 } from 'src/utils/tableUtil'
 import api from 'src/utils/api'
 import { message } from 'antd'
+import { useState } from 'react'
+import UploadModal from './UploadModal'
 
 const TKDUploadList = () => {
   const { allCourses, allUploadSettings } = useSelector((state) => state.app)
+  const [selectedUpload, setSelectedUpload] = useState()
 
   const dispatchUploadToUpperAgent = async (uploadId) => {
     await api.post(`/uploadReq/deal?id=${uploadId}`)
@@ -37,6 +40,21 @@ const TKDUploadList = () => {
         </Button>
       )
     }
+
+    if (record.isDealt) {
+      return <div></div>
+    }
+
+    return (
+      <Button
+        onClick={() => {
+          setSelectedUpload(record)
+        }}
+        type="primary"
+      >
+        点击上传
+      </Button>
+    )
   }
 
   const getColumns = () => [
@@ -51,7 +69,17 @@ const TKDUploadList = () => {
     getCustomRow('处理结果', customAction),
   ]
 
-  return <PageList columns={getColumns} size="small" showAdd={false} />
+  return (
+    <>
+      <PageList columns={getColumns} size="small" showAdd={false} />
+      {selectedUpload && (
+        <UploadModal
+          uploadItem={selectedUpload}
+          hideModal={() => setSelectedUpload(null)}
+        />
+      )}
+    </>
+  )
 }
 
 export default TKDUploadList

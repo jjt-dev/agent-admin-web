@@ -53,5 +53,5 @@ export default SettingList
 const getColumns = (updatePermission) => [
   tableOrder,
   getRow('科目名称', 'name'),
-  getSwitchRow(updatePermission, '上传权限', 'canUplaod'),
+  getSwitchRow(updatePermission, '上传权限', 'canUpload'),
 ]

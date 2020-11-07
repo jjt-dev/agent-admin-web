@@ -54,9 +54,9 @@ const App = () => {
         'login-page': isLogin,
       })}
     >
-      {/* <Header user={user} /> */}
+      <Header user={user} />
       <main>
-        {/* <SideMenu /> */}
+        <SideMenu />
         <ErrorBoundary>
           <JjtBreadcrumb />
           <Router />

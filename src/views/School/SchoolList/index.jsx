@@ -18,11 +18,11 @@ const SchoolList = () => {
 
 export default SchoolList
 
-const getColumns = (deleteSchool) => [
+const getColumns = (deleteSchool, updateSchoolStatus) => [
   tableOrder,
   getRow('学校名称', 'name'),
   getAvatarRow({ name: 'logoUrl', size: 30 }),
-  getSwitchRow(),
+  getSwitchRow(updateSchoolStatus),
   getExternalLinkRow(schoolUrl),
   getLinkRow('管理员', `/school/:id/:name/admin/list`),
   getLinkRow('订单', `/school/:id/:name/order/list`),

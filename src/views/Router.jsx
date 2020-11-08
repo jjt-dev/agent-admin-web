@@ -8,6 +8,7 @@ import schoolRoute from './School/schoolRoute'
 import settingRoute from './Setting/settingRoute'
 import systemRoute from './System/systemRoute'
 import tkdUploadRoute from './TKDUpload/tkdUploadRoute'
+import parentAgentRoute from './ParentAgent/parentAgentRoute'
 
 export const routes = [
   ...agentRoute,
@@ -15,6 +16,7 @@ export const routes = [
   ...systemRoute,
   ...tkdUploadRoute,
   ...settingRoute,
+  ...parentAgentRoute,
   { path: '/login', comp: Login },
 ]
 

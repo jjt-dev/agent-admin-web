@@ -6,6 +6,7 @@ import {
   AccountBookOutlined,
   CloudUploadOutlined,
   SettingOutlined,
+  TeamOutlined,
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import React, { useEffect, useState, useMemo } from 'react'
@@ -90,5 +91,12 @@ const getMenus = (isLastAgentLevel) => [
     prefix: '/setting',
     icon: <SettingOutlined />,
     title: '参数设置',
+  },
+  {
+    key: '5',
+    path: '/parent-agent/info',
+    prefix: '/parent-agent',
+    icon: <TeamOutlined />,
+    title: '上级代理',
   },
 ]

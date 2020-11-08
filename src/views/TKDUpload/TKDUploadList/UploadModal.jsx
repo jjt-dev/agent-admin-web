@@ -3,6 +3,8 @@ import React from 'react'
 import { useState } from 'react'
 import api from 'src/utils/api'
 
+import './index.less'
+
 const UploadModal = ({ uploadItem, hideModal }) => {
   const [userName, setUserName] = useState('')
 
@@ -15,12 +17,13 @@ const UploadModal = ({ uploadItem, hideModal }) => {
       `/uploadReq/deal?id=${uploadItem.id}&ztxUserName=${userName}`
     )
     message.success('上传进行中，请稍后刷新查看状态')
+    hideModal()
   }
 
   return (
     <Modal
       title="上传中跆协"
-      wrapClassName=""
+      wrapClassName="upload-tkd-modal"
       visible={true}
       onOk={uploadTkd}
       onCancel={hideModal}
@@ -28,7 +31,7 @@ const UploadModal = ({ uploadItem, hideModal }) => {
       okText="上传"
     >
       <Alert message="请首先登录中跆协网站并保持登录状态。" type="warning" />
-      <Form.Item name="中跆协用户名">
+      <Form.Item label="中跆协用户名">
         <Input value={userName} onChange={(e) => setUserName(e.target.value)} />
       </Form.Item>
     </Modal>

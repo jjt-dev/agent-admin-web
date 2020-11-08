@@ -1,7 +1,9 @@
-import Button from 'antd/es/button'
+import { message } from 'antd'
 import React from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import PageList from 'src/components/PageList'
+import api from 'src/utils/api'
 import { findById } from 'src/utils/common'
 import {
   getCustomRow,
@@ -9,10 +11,9 @@ import {
   getRow,
   tableOrder,
 } from 'src/utils/tableUtil'
-import api from 'src/utils/api'
-import { message } from 'antd'
-import { useState } from 'react'
+
 import UploadModal from './UploadModal'
+import ResultModal from './ResultModal'
 
 const TKDUploadList = () => {
   const { allCourses, allUploadSettings } = useSelector((state) => state.app)
@@ -29,31 +30,26 @@ const TKDUploadList = () => {
       return record.isDealt ? (
         '已提交申请'
       ) : (
-        <Button
-          size="small"
-          type="primary"
+        <span
+          className="table-action"
           onClick={() => {
             dispatchUploadToUpperAgent(record.id)
           }}
         >
           提交申请
-        </Button>
+        </span>
       )
     }
 
-    if (record.isDealt) {
-      return <div></div>
-    }
-
     return (
-      <Button
+      <span
+        className="table-action"
         onClick={() => {
           setSelectedUpload(record)
         }}
-        type="primary"
       >
-        点击上传
-      </Button>
+        {record.isDealt ? '查看结果' : '点击上传'}
+      </span>
     )
   }
 
@@ -72,8 +68,14 @@ const TKDUploadList = () => {
   return (
     <>
       <PageList columns={getColumns} size="small" showAdd={false} />
-      {selectedUpload && (
+      {selectedUpload && !selectedUpload.isDealt && (
         <UploadModal
+          uploadItem={selectedUpload}
+          hideModal={() => setSelectedUpload(null)}
+        />
+      )}
+      {selectedUpload && selectedUpload.isDealt && (
+        <ResultModal
           uploadItem={selectedUpload}
           hideModal={() => setSelectedUpload(null)}
         />

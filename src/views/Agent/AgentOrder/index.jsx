@@ -8,11 +8,12 @@ import { useTypes } from 'src/utils/const'
 import { agentInfoPath } from 'src/utils/httpUtil'
 
 const AgentOrder = () => {
-  const { allCourses } = useSelector((state) => state.app)
+  const { allCourses, user } = useSelector((state) => state.app)
+  const [account, setAccount] = useState()
   const { agentId, agentName } = useParams()
   const [courseId, setCourseId] = useState()
   const [useType, setUseType] = useState(useTypes.exam.id)
-  const [{ price, balance } = {}, fetchAgent] = useFetch()
+  const [{ price } = {}, fetchAgent] = useFetch()
 
   const fieldsChangeCallback = (field) => {
     const [fieldName] = field.name
@@ -23,6 +24,17 @@ const AgentOrder = () => {
       setCourseId(field.value)
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      const account = user.accounts.find(
+        (item) =>
+          item.courseId === courseId &&
+          String(item.useType) === useTypes.exam.id
+      )
+      setAccount(account)
+    }
+  }, [courseId, user])
 
   useEffect(() => {
     if (courseId) {
@@ -37,7 +49,7 @@ const AgentOrder = () => {
       backPath={`/agent/${agentId}/${agentName}/order/list`}
       defaultValues={{
         price,
-        balance,
+        balance: account?.balance ?? 0,
         useType,
         targetAgentId: agentId,
       }}

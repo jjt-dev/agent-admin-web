@@ -28,13 +28,11 @@ const AgentOrder = () => {
   useEffect(() => {
     if (user) {
       const account = user.accounts.find(
-        (item) =>
-          item.courseId === courseId &&
-          String(item.useType) === useTypes.exam.id
+        (item) => item.courseId === courseId && String(item.useType) === useType
       )
       setAccount(account)
     }
-  }, [courseId, user])
+  }, [courseId, useType, user])
 
   useEffect(() => {
     if (courseId) {

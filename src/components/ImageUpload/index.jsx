@@ -56,6 +56,27 @@ class ImageUpload extends React.Component {
     }
   }
 
+  getUpload = (imageUrl, uploadButton) => {
+    return (
+      <Upload
+        disabled={this.props.disabled}
+        name="file"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={false}
+        action={getApiRootImg()}
+        beforeUpload={(file) => beforeUpload(file, this.props.callback)}
+        onChange={this.handleChange}
+      >
+        {imageUrl ? (
+          <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
+        ) : (
+          uploadButton
+        )}
+      </Upload>
+    )
+  }
+
   render() {
     const uploadButton = (
       <div>
@@ -64,26 +85,11 @@ class ImageUpload extends React.Component {
       </div>
     )
     const { imageUrl } = this.state
-    return (
-      <ImgCrop rotate>
-        <Upload
-          disabled={this.props.disabled}
-          name="file"
-          listType="picture-card"
-          className="avatar-uploader"
-          showUploadList={false}
-          action={getApiRootImg()}
-          beforeUpload={(file) => beforeUpload(file, this.props.callback)}
-          onChange={this.handleChange}
-        >
-          {imageUrl ? (
-            <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-          ) : (
-            uploadButton
-          )}
-        </Upload>
-      </ImgCrop>
-    )
+
+    if (this.props.noImageCrop) {
+      return this.getUpload(imageUrl, uploadButton)
+    }
+    return <ImgCrop rotate>{this.getUpload(imageUrl, uploadButton)}</ImgCrop>
   }
 }
 

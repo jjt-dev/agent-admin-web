@@ -30,6 +30,7 @@ const getFormItems = (allCourses) => [
     name: 'logoUrl',
     comp: 'FormImage',
     message: '请上传头像',
+    noImageCrop: true,
   },
   {
     label: '联系人',

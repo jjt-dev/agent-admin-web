@@ -60,6 +60,7 @@ const TKDUploadList = () => {
       (record) => findById(allCourses, record.courseId).name
     ),
     getRow('考试名称', 'title'),
+    getRow('考生数', 'studentCount'),
     getDateRow('申请时间', 'createTime'),
     getDateRow('处理时间', 'dealTime'),
     getCustomRow('处理结果', customAction),
